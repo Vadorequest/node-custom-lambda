@@ -1,6 +1,8 @@
 FROM lambci/lambda-base:build
 
+# Copy everything in /opt/
 COPY bootstrap.c bootstrap.js /opt/
+COPY node_modules/ /opt/node_modules/
 
 ARG NODE_VERSION
 

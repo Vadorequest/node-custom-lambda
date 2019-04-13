@@ -4,12 +4,15 @@
 #include <unistd.h>
 
 #ifndef NODE_MAJOR
-#define NODE_MAJOR "10"
+#define NODE_MAJOR "6"
 #endif
 
 #define AWS_EXECUTION_ENV "AWS_Lambda_nodejs" NODE_MAJOR "_lambci"
 #define NODE_PATH "/opt/nodejs/node" NODE_MAJOR "/node_modules:" \
                   "/opt/nodejs/node_modules:"                    \
+                  "/opt/node_modules/*:"                         \
+                  "/opt/node_modules/:"                          \
+                  "/opt:"                                        \
                   "/var/runtime/node_modules:"                   \
                   "/var/runtime:"                                \
                   "/var/task"
@@ -29,7 +32,8 @@ int main(void) {
   char max_old_space_size[ARG_BUF_SIZE];
   snprintf(max_old_space_size, ARG_BUF_SIZE, "--max-old-space-size=%d", mem_size * 90 / 100);
 
-  execv("/opt/bin/node", (char *[]){
+  // Use ESM to try to execute
+  execv("/opt/bin/node -r esm", (char *[]){
                              "node",
                              "--expose-gc",
                              max_semi_space_size,

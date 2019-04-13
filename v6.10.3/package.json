@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "esm": "3.2.22"
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "check": "./check.sh",
+    "test": "./test.sh",
+    "compile": "yarn build && yarn test"
+  }
+}

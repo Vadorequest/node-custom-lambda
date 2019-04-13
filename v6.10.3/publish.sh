@@ -1,8 +1,8 @@
 #!/bin/bash
 
-LAYER_NAME=nodejs10
+LAYER_NAME=nodejs6
 
-NODE_VERSION=10.15.3
+NODE_VERSION=6.10.3
 
 REGIONS='
 us-east-1

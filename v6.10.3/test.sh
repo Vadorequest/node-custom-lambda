@@ -5,6 +5,7 @@ rm -rf layer && unzip layer.zip -d layer
 cd test
 
 npm ci
+echo "npm CI > DONE"
 
 # Create zipfile for uploading to Lambda – we don't use this here
 rm -f lambda.zip && zip -qyr lambda.zip index.js node_modules

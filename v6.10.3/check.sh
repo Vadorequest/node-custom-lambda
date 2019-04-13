@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LAYER_NAME=nodejs10
+LAYER_NAME=nodejs6
 
 REGIONS='
 ap-northeast-1
@@ -20,7 +20,7 @@ us-west-1
 us-west-2
 '
 
-for region in $REGIONS; do
-  aws lambda list-layer-versions --region $region --layer-name $LAYER_NAME \
+for region in ${REGIONS}; do
+  aws lambda list-layer-versions --region ${region} --layer-name ${LAYER_NAME} \
     --query 'LayerVersions[*].[LayerVersionArn]' --output text
 done
