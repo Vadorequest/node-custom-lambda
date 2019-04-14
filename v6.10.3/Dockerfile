@@ -2,7 +2,6 @@ FROM lambci/lambda-base:build
 
 COPY bootstrap bootstrap.js /opt/
 COPY node_modules /opt/node_modules
-COPY test.js /root
 ENV export NODE_PATH=/opt/node_modules
 
 ARG NODE_VERSION
