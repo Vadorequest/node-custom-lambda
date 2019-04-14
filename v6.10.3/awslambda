@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+var path = require('path')
+var fs = require('fs')
+
+require('./awslambda.js').start_runtime();

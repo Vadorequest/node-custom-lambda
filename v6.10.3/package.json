@@ -1,11 +1,11 @@
 {
-  "dependencies": {
-    "esm": "3.2.22"
-  },
   "scripts": {
     "build": "./build.sh",
     "check": "./check.sh",
     "test": "./test.sh",
+    "publish:all": "./publish.sh",
+    "publish:one": "./publish-eu-west-1.sh",
+    "release:all": "yarn compile && yarn publish:all",
     "compile": "yarn build && yarn test"
   }
 }
