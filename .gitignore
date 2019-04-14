@@ -1,4 +1,6 @@
 node_modules
+v4.3/layer
+v4.3/test/lambda.zip
 v6.10.3/layer
 v6.10.3/test/lambda.zip
 v10.x/layer
