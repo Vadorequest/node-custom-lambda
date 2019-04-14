@@ -4,6 +4,11 @@
 
 > Work in progress, not ready for production use at this time
 
+Currently trying to implement a runtime that uses AWS official implementation
+But it is hard (closed sources, mix of C and JS) and any help would be appreciated
+
+See the [WIP branch](https://github.com/Vadorequest/node-custom-lambda/tree/iso-official-runtime)
+
 ## Getting started
 
 Use the following ARN in your project. They are made public so that anyone can use them without any authentication.
