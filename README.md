@@ -1,84 +1,44 @@
-# Node.js 10.x and 11.x for AWS Lambda
+# Node.js custom runtimes for official AWS Lambda runtimes (even retired ones)
 
-A [custom runtime](https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers/)
-for AWS Lambda to execute functions in Node.js 10.x or 11.x
+## Status
 
-## Getting Started
+> Work in progress, not ready for production use at this time
 
-Save as `index.js`:
+## Getting started
 
-```js
-exports.handler = async(event, context) => {
-  console.log(`Hi from Node.js ${process.version} on Lambda!`)
-  console.log(`There is ${context.getRemainingTimeInMillis()}ms remaining`)
-  return event
-}
-```
+Use the following ARN in your project. They are made public so that anyone can use them without any authentication.
 
-Then bundle up into a zipfile – this is your function bundle:
+> If you wish to own your own ARN (safer) please see the **[Publishing](#publishing)** section
 
-```sh
-zip -yr lambda.zip index.js  # add node_modules too if you have any
-```
 
-Create a new Lambda function and choose the custom runtime option.
+## Available runtimes ready for use:
 
-![Create lambda](https://raw.githubusercontent.com/lambci/node-custom-lambda/master/img/create.png "Create lambda screenshot")
+- `6.10.3`: `arn:aws:lambda:eu-west-1:035907498810:layer:nodejs610:1`
 
-Select your `lambda.zip` as the "Function code" and make the handler "index.handler".
+**WARNING**: Those runtimes are not yet ISO with AWS Lambda, thus meaning they do not offer exactly the same capabilities and therefore may behave differently compared to the official runtimes.
+_At this time, they have a the same implementation as LambdaCI, which is different from AWS implementation even though it's really close_
 
-![Function code](https://raw.githubusercontent.com/lambci/node-custom-lambda/master/img/function_code.png "Function code setup screenshot")
+Only the eu-west-1 has been released at this time, due to WIP status. All regions will eventually be published to, when the project reaches maturity.
 
-Then click on Layers and choose "Add a layer", and "Provide a layer version ARN" and enter the following ARN:
+## Motivations
 
-```
-arn:aws:lambda:us-east-1:553035198032:layer:nodejs10:12
-```
+> The goal of this repository is to provide custom nodejs runtimes for official AWS runtimes that have been deprecated by AWS and are no longer available.
+> At the moment, only the nodejs runtimes `4.3.2`,  `6.10.3`, `8.10.?` are concerned.
+>
+> _The point is not to encourage developers to use deprecated versions, but to offer a fallback solution for those who can't upgrade their application yet._
+>
+> Also, the goal is to provide safe and reliable runtimes that won't be made unavailable by AWS in the future, 
+in comparison of using the official runtimes that will eventually reach EOL and will be removed, therefore requiring a manual upgrade,
+which can a real pain if not anticipated properly
 
-Or [use this link](https://console.aws.amazon.com/lambda/home?region=us-east-1#/connect/layer?layer=arn:aws:lambda:us-east-1:553035198032:layer:nodejs10:12) and pick your function from the "Function name" auto-suggest.
+## Publishing
 
-![Add a layer](https://raw.githubusercontent.com/lambci/node-custom-lambda/master/img/layer.png "Add a layer screenshot")
+Assuming your have `aws-cli` installed and are authenticated to an AWS account _(the `default` profile will be automatically selected from your `~/.aws/config`)_
 
-Then save your lambda and test it with a test event!
+- Fork
+- `cd` in the version folder you want to release
+- Run `yarn release:all` which will compile, test and release for all versions _(`npm` can be used too)_
 
-![Test event output](https://raw.githubusercontent.com/lambci/node-custom-lambda/master/img/log.png "Test event output screenshot")
+## Inspirations
 
-## Current Version ARNs
-
-| Node.js version | ARN |
-| --- | --- |
-| 10.15.3 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:12` |
-| 11.13.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:16` |
-
-## Previous Version ARNs
-
-| Node.js version | ARN |
-| --- | --- |
-| 11.12.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:13` |
-| 11.11.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:11` |
-| 11.10.1 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:10` |
-| 10.15.2 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:7` |
-| 10.15.1 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:6` |
-| 11.10.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:9` |
-| 11.9.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:8` |
-| 11.8.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:7` |
-| 10.15.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:5` |
-| 11.7.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:6` |
-| 11.6.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:5` |
-| 10.14.2 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:3` |
-| 11.4.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:4` |
-| 10.14.1 | `arn:aws:lambda:<region>:553035198032:layer:nodejs10:1` |
-| 11.3.0 | `arn:aws:lambda:<region>:553035198032:layer:nodejs11:1` |
-
-## Things to be aware of
-
-* This is a no-batteries-included runtime – you'll need to zip up any
-  `node_modules` dependencies, including `aws-sdk` with your lambda function
-* It does not monkeypatch `console.log`, `console.error`, etc
-  functions to add extra timestamps and request IDs to each line you log as the
-  official runtimes do. I believe this leads to fewer surprises and cleaner
-  logs that are easier to parse by various tools – but if you're
-  relying on this behaviour you'll need to add these fields yourself.
-* Cold start overhead of ~240ms for Node.js 10.x and ~250ms for 11.x – this
-  is due to Node.js' increasingly slow startup time,
-  [but they're working on it!](https://github.com/nodejs/node/issues/17058)
+This is a fork of the great work [made by LambdaCI](https://github.com/lambci/node-custom-lambda), and [another fork implementing the node4.3 version](https://github.com/daffinity/node-custom-lambda).

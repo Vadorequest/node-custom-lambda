@@ -3,6 +3,8 @@
     "build": "./build.sh",
     "check": "./check.sh",
     "test": "./test.sh",
+    "publish:all": "./publish.sh",
+    "release:all": "yarn compile && yarn publish:all",
     "compile": "yarn build && yarn test"
   }
 }
