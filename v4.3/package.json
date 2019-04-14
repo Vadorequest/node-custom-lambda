@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "./build.sh",
+    "check": "./check.sh",
+    "test": "./test.sh",
+    "compile": "yarn build && yarn test"
+  }
+}

@@ -1,8 +1,6 @@
 FROM lambci/lambda-base:build
 
-# Copy everything in /opt/
-COPY bootstrap.c bootstrap.js /opt/
-COPY node_modules/ /opt/node_modules/
+COPY bootstrap bootstrap.js /opt/
 
 ARG NODE_VERSION
 
@@ -11,7 +9,4 @@ RUN curl -sSL https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-lin
   strip /opt/bin/node
 
 RUN cd /opt && \
-  export NODE_MAJOR=$(echo $NODE_VERSION | awk -F. '{print "\""$1"\""}') && \
-  clang -Wall -Werror -s -O2 -D NODE_MAJOR="$NODE_MAJOR" -o bootstrap bootstrap.c && \
-  rm bootstrap.c && \
   zip -yr /tmp/node-v${NODE_VERSION}.zip ./*

@@ -1,7 +1,7 @@
 // Test that global requires work
-const aws4 = require('aws4')
+var aws4 = require('aws4')
 
-exports.handler = async(event, context) => {
+module.exports.handler = function(event, context) {
   console.log(process.version)
   console.log(process.execPath)
   console.log(process.execArgv)
