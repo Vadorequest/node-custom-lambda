@@ -185,7 +185,6 @@ function postError(path, err) {
 
 function getHandler() {
   var appParts = _HANDLER.split('.');
-
   if (appParts.length !== 2) {
     throw new Error('Bad handler ' + _HANDLER);
   }
@@ -193,7 +192,6 @@ function getHandler() {
   var _appParts = _slicedToArray(appParts, 2),
       modulePath = _appParts[0],
       handlerName = _appParts[1];
-
   var app = void 0;
   try {
     app = require(LAMBDA_TASK_ROOT + '/' + modulePath);
