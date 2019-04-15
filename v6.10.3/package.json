@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "esm": "^3.2.22",
-    "ls": "^0.2.1",
     "uuid": "^3.3.2"
   },
   "scripts": {
