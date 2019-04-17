@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "esm": "3.2.22"
+    "esm": "^3.2.22",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "build": "./build.sh",
     "check": "./check.sh",
     "test": "./test.sh",
-    "compile": "yarn build && yarn test"
+    "compile": "yarn build && yarn test",
+    "oui": "./test.js"
   }
 }
